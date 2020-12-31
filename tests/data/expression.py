@@ -31,6 +31,7 @@ not great
 -1
 ~int and not v1 ^ 123 + v2 | True
 (~int) and (not ((v1 ^ (123 + v2)) | True))
++really ** -confusing ** ~operator ** -precedence
 flags & ~ select.EPOLLIN and waiters.write_task is not None
 lambda arg: None
 lambda a=True: a
@@ -95,6 +96,9 @@ call.me(maybe)
 list[str]
 dict[str, int]
 tuple[str, ...]
+tuple[
+    str, int, float, dict[str, int]
+]
 tuple[str, int, float, dict[str, int],]
 very_long_variable_name_filters: t.List[
     t.Tuple[str, t.Union[str, t.List[t.Optional[str]]]],
@@ -145,7 +149,7 @@ SomeName
 ((i ** 2) for i in (1, 2, 3))
 ((i ** 2) for i, _ in ((1, 'a'), (2, 'b'), (3, 'c')))
 (((i ** 2) + j) for i in (1, 2, 3) for j in (1, 2, 3))
-(*starred)
+(*starred,)
 {"id": "1","type": "type","started_at": now(),"ended_at": now() + timedelta(days=10),"priority": 1,"import_session_id": 1,**kwargs}
 a = (1,)
 b = 1,
@@ -156,6 +160,7 @@ f = 1, *range(10)
 g = 1, *"ten"
 what_is_up_with_those_new_coord_names = (coord_names + set(vars_to_create)) + set(vars_to_remove)
 what_is_up_with_those_new_coord_names = (coord_names | set(vars_to_create)) - set(vars_to_remove)
+result = session.query(models.Customer.id).filter(models.Customer.account_id == account_id, models.Customer.email == email_address).order_by(models.Customer.id.asc()).all()
 result = session.query(models.Customer.id).filter(models.Customer.account_id == account_id, models.Customer.email == email_address).order_by(models.Customer.id.asc(),).all()
 Ø = set()
 authors.łukasz.say_thanks()
@@ -169,6 +174,8 @@ mapping = {
 def gen():
     yield from outside_of_generator
     a = (yield)
+    b = ((yield))
+    c = (((yield)))
 
 async def f():
     await some.complicated[0].call(with_args=(True or (1 is not 1)))
@@ -278,6 +285,7 @@ not great
 -1
 ~int and not v1 ^ 123 + v2 | True
 (~int) and (not ((v1 ^ (123 + v2)) | True))
++(really ** -(confusing ** ~(operator ** -precedence)))
 flags & ~select.EPOLLIN and waiters.write_task is not None
 lambda arg: None
 lambda a=True: a
@@ -310,11 +318,23 @@ str or None if (1 if True else 2) else str or bytes or None
 (1, 2, 3)
 []
 [1, 2, 3, 4, 5, 6, 7, 8, 9, (10 or A), (11 or B), (12 or C)]
-[1, 2, 3]
+[
+    1,
+    2,
+    3,
+]
 [*a]
 [*range(10)]
-[*a, 4, 5]
-[4, *a, 5]
+[
+    *a,
+    4,
+    5,
+]
+[
+    4,
+    *a,
+    5,
+]
 [
     this_is_a_very_long_variable_which_will_force_a_delimiter_split,
     element,
@@ -364,15 +384,19 @@ list[str]
 dict[str, int]
 tuple[str, ...]
 tuple[str, int, float, dict[str, int]]
+tuple[
+    str,
+    int,
+    float,
+    dict[str, int],
+]
 very_long_variable_name_filters: t.List[
     t.Tuple[str, t.Union[str, t.List[t.Optional[str]]]],
 ]
 xxxx_xxxxx_xxxx_xxx: Callable[..., List[SomeClass]] = classmethod(  # type: ignore
     sync(async_xxxx_xxx_xxxx_xxxxx_xxxx_xxx.__func__)
 )
-xxxx_xxx_xxxx_xxxxx_xxxx_xxx: Callable[
-    ..., List[SomeClass]
-] = classmethod(  # type: ignore
+xxxx_xxx_xxxx_xxxxx_xxxx_xxx: Callable[..., List[SomeClass]] = classmethod(  # type: ignore
     sync(async_xxxx_xxx_xxxx_xxxxx_xxxx_xxx.__func__)
 )
 xxxx_xxx_xxxx_xxxxx_xxxx_xxx: Callable[..., List[SomeClass]] = classmethod(
@@ -415,7 +439,7 @@ SomeName
 ((i ** 2) for i in (1, 2, 3))
 ((i ** 2) for i, _ in ((1, "a"), (2, "b"), (3, "c")))
 (((i ** 2) + j) for i in (1, 2, 3) for j in (1, 2, 3))
-(*starred)
+(*starred,)
 {
     "id": "1",
     "type": "type",
@@ -446,6 +470,16 @@ result = (
     .order_by(models.Customer.id.asc())
     .all()
 )
+result = (
+    session.query(models.Customer.id)
+    .filter(
+        models.Customer.account_id == account_id, models.Customer.email == email_address
+    )
+    .order_by(
+        models.Customer.id.asc(),
+    )
+    .all()
+)
 Ø = set()
 authors.łukasz.say_thanks()
 mapping = {
@@ -458,7 +492,9 @@ mapping = {
 
 def gen():
     yield from outside_of_generator
-    a = (yield)
+    a = yield
+    b = yield
+    c = yield
 
 
 async def f():

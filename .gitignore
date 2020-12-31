@@ -1,3 +1,4 @@
+.venv
 .coverage
 _build
 .DS_Store
@@ -8,3 +9,11 @@ __pycache__
 black.egg-info
 build/
 dist/
+pip-wheel-metadata/
+src/_black_version.py
+.idea
+.eggs
+.dmypy.json
+*.swp
+.hypothesis/
+venv/

@@ -44,6 +44,12 @@ re.compile(r'[\\"]')
 '\\""'
 "\\''"
 'Lots of \\\\\\\\\'quotes\''
+f'{y * " "} \'{z}\''
+f'{{y * " "}} \'{z}\''
+f'\'{z}\' {y * " "}'
+f'{y * x} \'{z}\''
+'\'{z}\' {y * " "}'
+'{y * x} \'{z}\''
 
 # output
 
@@ -73,12 +79,7 @@ r"Date d\'expiration:(.*)"
 r'Tricky "quote'
 r"Not-so-tricky \"quote"
 rf"{yay}"
-"\n\
-The \"quick\"\n\
-brown fox\n\
-jumps over\n\
-the 'lazy' dog.\n\
-"
+"\nThe \"quick\"\nbrown fox\njumps over\nthe 'lazy' dog.\n"
 re.compile(r'[\\"]')
 "x = ''; y = \"\""
 "x = '''; y = \"\""
@@ -93,3 +94,9 @@ re.compile(r'[\\"]')
 '\\""'
 "\\''"
 "Lots of \\\\\\\\'quotes'"
+f'{y * " "} \'{z}\''
+f"{{y * \" \"}} '{z}'"
+f'\'{z}\' {y * " "}'
+f"{y * x} '{z}'"
+"'{z}' {y * \" \"}"
+"{y * x} '{z}'"
